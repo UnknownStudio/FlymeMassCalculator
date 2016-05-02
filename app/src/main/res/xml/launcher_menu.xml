@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<launcher_menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <menu android:title="@string/start" data="flyme_3dtouch://com.trychen.flyme.flymemasscalculator/start" icon="&#xe020;" />
+    <menu android:title="@string/basic" data="flyme_3dtouch://com.trychen.flyme.flymemasscalculator/basic" icon="&#xe006;" />
+    <menu android:title="@string/higher" data="flyme_3dtouch://com.trychen.flyme.flymemasscalculator/higher" icon="&#xe05f;" />
+</launcher_menu>

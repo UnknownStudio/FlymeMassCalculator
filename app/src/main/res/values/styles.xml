@@ -1,0 +1,130 @@
+<resources>
+    
+    <style name="Theme.DeviceDefault.Light.Color.DodgerBlue" parent="@android:style/Theme.DeviceDefault.Light" >
+		<!-- checkbox styles -->
+        <item name="android:checkboxStyle">@style/Widget.DeviceDefault.Light.CompoundButton.CheckBox.Color.DodgerBlue</item>
+        <!-- popup window check styles -->
+        <item name="android:textColorAlertDialogListItem">@color/mz_popup_checked_text_color_dodgerblue</item>
+        <item name="android:listChoiceIndicatorSingle">@drawable/mz_btn_check_single_color_dodgerblue</item>
+        <item name="android:listChoiceIndicatorMultiple">@drawable/mz_btn_check_multiple_color_dodgerblue</item>
+        <!-- Button styles -->
+        <item name="android:buttonStyle">@style/Widget.DeviceDefault.Light.Button.Color.DodgerBlue</item>
+		<!-- Horizontal progressBar styles -->
+        <item name="android:progressBarStyleHorizontal">@style/Widget.DeviceDefault.Light.ProgressBar.Horizontal.Color.DodgerBlue</item>
+        <!-- edit text background -->
+        <item name="android:editTextBackground">@drawable/mz_edit_text_background_color_dodgerblue</item>
+		<!-- seekBar styles -->
+		<item name="android:seekBarStyle">@style/Widget.DeviceDefault.Light.SeekBar.Color.DodgerBlue</item> 
+        <!-- action bar -->
+        <item name="android:actionBarSize">48dp</item>
+        <item name="android:homeAsUpIndicator">@drawable/mz_titlebar_ic_back</item>
+        <item name="android:actionMenuTextColor">@color/mz_action_menu_textcolor</item>
+        <item name="android:actionBarStyle">@style/Widget.DeviceDefault.Light.ActionBar.Color.DodgerBlue</item>
+        <item name="android:actionButtonStyle">@style/Widget.DeviceDefault.Light.ActionButton.Color.DodgerBlue</item>
+        <item name="android:actionOverflowButtonStyle">@style/Widget.DeviceDefault.Light.ActionButton.Overflow.Color.DodgerBlue</item>
+        <item name="android:actionOverflowMenuStyle">@style/Widget.Flyme.Light.PopupMenu.Overflow</item>
+        <item name="android:actionModeCloseDrawable">@drawable/mz_titlebar_ic_back</item>
+		<!-- TextView -->
+        <item name="android:textCursorDrawable">@drawable/mz_text_cursor_light_color_dodgerblue</item>
+		<item name="android:textColorHighlight">@color/mz_highlighted_text_light_color_dodgerblue</item>
+        <item name="android:textSelectHandleLeft">@drawable/mz_text_select_handle_left_color_dodgerblue</item>
+        <item name="android:textSelectHandleRight">@drawable/mz_text_select_handle_right_color_dodgerblue</item>
+        <item name="android:textColorLink">@color/mz_theme_color_dodgerblue</item>
+		<!-- RatingBar -->
+		<item name="android:ratingBarStyle">@style/Widget.DeviceDefault.Light.RatingBar.Color.DodgerBlue</item>
+
+        <item name="android:windowDrawsSystemBarBackgrounds">true</item>
+        <item name="android:statusBarColor">@color/mz_theme_color_dodgerblue</item>
+    </style>
+    
+    
+    <style name="Widget.DeviceDefault.Light.CompoundButton.CheckBox.Color.DodgerBlue" parent="@android:style/Widget.DeviceDefault.Light.CompoundButton.CheckBox" >
+        <item name="android:button">@drawable/mz_btn_check_multiple_color_dodgerblue</item>
+    </style>
+    
+    <style name="Widget.DeviceDefault.Light.Button.Color.DodgerBlue" parent="@android:style/Widget.DeviceDefault.Light.Button" >
+        <item name="android:background">@drawable/mz_btn_corner_default_color_dodgerblue</item>
+    </style>
+    
+    <style name="Widget.DeviceDefault.Light.ProgressBar.Horizontal.Color.DodgerBlue" parent="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal" >
+		<item name="android:progressDrawable">@drawable/mz_progress_horizontal_color_dodgerblue</item>
+    </style>
+    
+    <style name="Widget.DeviceDefault.Light.SeekBar.Color.DodgerBlue" parent="@android:style/Widget.DeviceDefault.Light.SeekBar" >
+        <item name="android:progressDrawable">@drawable/mz_scrubber_progress_horizontal_color_dodgerblue</item>
+        <item name="android:indeterminateDrawable">@drawable/mz_scrubber_progress_horizontal_color_dodgerblue</item>
+        <item name="android:thumb">@drawable/mz_scrubber_control_selector_color_dodgerblue</item>
+    </style>
+    
+    <style name="Widget.DeviceDefault.Light.ActionBar.Color.DodgerBlue" parent="@android:style/Widget.DeviceDefault.Light.ActionBar" >
+        <item name="android:background">@drawable/mz_titlebar_background_bottom_color_dodgerblue</item>
+        <item name="android:backgroundStacked">@drawable/mz_titlebar_background_bottom_blank</item>
+        <item name="android:backgroundSplit">@drawable/mz_smartbar_background</item>
+        <item name="android:progressBarStyle">@style/Widget.DeviceDefault.Light.ProgressBar.Horizontal.ActionBar.Color.DodgerBlue</item>
+        <item name="android:progressBarPadding">0dip</item>
+        <item name="android:titleTextStyle">@style/TextAppearance.Flyme.Widget.ActionBar.Title</item>
+    </style>
+    <style name="TextAppearance.Flyme.Widget.ActionBar.Title" parent="@android:style/TextAppearance.Material.Widget.ActionBar.Title">
+        <item name="android:textSize">18sp</item>
+        <item name="android:textColor">@color/mz_action_menu_textcolor</item>
+    </style>
+    <!-- Check Buttonless multiple -->
+    <style name="Widget.DeviceDefault.CompoundButton.CheckButtonlessMultiple.Color.DodgerBlue" parent="@android:style/Widget.Button">
+        <item name="android:background">@drawable/mz_btn_check_buttonless_multiple_color_dodgerblue</item>
+        <item name="android:button">@null</item>
+        <item name="android:clickable">false</item>
+        <item name="android:focusable">false</item>
+    </style>
+    
+    <style name="Widget.DeviceDefault.Light.ActionButton.Color.DodgerBlue" parent="@android:style/Widget.DeviceDefault.Light.ActionButton">
+        <item name="android:minWidth">34dp</item>
+        <item name="android:minHeight">48dp</item>
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:scaleType">center</item>
+        <item name="android:gravity">center</item>
+        <item name="android:maxLines">1</item>
+        <item name="android:textAllCaps">false</item>
+        <item name="android:ellipsize">end</item>
+        <item name="android:paddingRight">5dp</item>
+        <item name="android:paddingLeft">5dp</item>
+    </style>
+    
+    <style name="Widget.DeviceDefault.Light.ActionButton.Overflow.Color.DodgerBlue" parent="@android:style/Widget.DeviceDefault.Light.ActionButton.Overflow">
+        <item name="android:background">?android:attr/selectableItemBackgroundBorderless</item>
+        <item name="android:src">@drawable/mz_titlebar_ic_more</item>
+    </style>
+	
+    <style name="Widget.DeviceDefault.Light.ProgressBar.Horizontal.ActionBar.Color.DodgerBlue" parent="@android:style/Widget.DeviceDefault.Light.ProgressBar.Horizontal">
+        <item name="android:progressDrawable">@drawable/mz_actionbar_progress_horizontal_color_dodgerblue</item>
+    </style>
+	
+	<style name="Widget.DeviceDefault.Light.RatingBar.Color.DodgerBlue" parent="@android:style/Widget.DeviceDefault.Light.RatingBar">
+        <item name="android:progressDrawable">@drawable/mz_ratingbar_full_light_color_dodgerblue</item>
+        <item name="android:indeterminateDrawable">@drawable/mz_ratingbar_full_light_color_dodgerblue</item>
+    </style>
+
+    <style name="Widget.Flyme.Light.PopupMenu.Overflow" parent="android:Widget.Material.PopupMenu.Overflow">
+        <item name="android:overlapAnchor">false</item>
+        <item name="android:popupBackground">@drawable/mz_popup_bg_light</item>
+        <item name="android:dropDownHorizontalOffset">-7dp</item>
+        <item name="android:dropDownVerticalOffset">7dp</item>
+        <item name="android:popupElevation">0dp</item>
+    </style>
+
+    <style name="numble">
+        <item name="android:textSize">90sp</item>
+    </style>
+
+    <style name="decimal">
+        <item name="android:textSize">45sp</item>
+    </style>
+
+    <style name="popupWindows">
+        <item name="android:windowEnterAnimation">@anim/showpop</item>
+        <!-- 指定显示的动画xml -->
+
+        <item name="android:windowExitAnimation">@anim/hidepop</item>
+        <!-- 指定消失的动画xml -->
+    </style>
+
+</resources>

@@ -1,0 +1,63 @@
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/rootLayout"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    tools:context="Main"
+    android:fitsSystemWindows="true"
+    android:clipToPadding="true">
+    <TextView
+        android:id="@+id/textWegiht"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:text="N/A"
+        android:layout_marginTop="40dp"
+        android:layout_margin="12dp"
+        android:textSize="45sp"
+        android:gravity="center"/>
+
+    <LinearLayout
+        android:id="@+id/buttonLayout"
+        android:layout_width="fill_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
+        android:visibility="gone">
+
+        <Button
+            android:id="@+id/btnCau"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:textColor="#ffffff"
+            android:text="@string/calculate"/>
+        <Button
+            android:id="@+id/btnClean"
+            android:layout_width="fill_parent"
+            android:layout_height="wrap_content"
+            android:layout_margin="12dp"
+            android:layout_weight="1"
+            android:textColor="#ffffff"
+            android:text="@string/clean"/>
+    </LinearLayout>
+    <EditText
+        android:id="@+id/massEditText"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_margin="12dp"
+        android:hint="@string/please_typein"
+        android:digits="0123456789abcdefghigklmnopqrstuvwxyzABCDEFGHIJKLMNOPQRSTUVWXYZ()"
+        android:textSize="24sp"
+        android:gravity="center"/>
+
+    <ImageView
+        android:id="@+id/indexImage"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:src="@drawable/index_image"
+        android:adjustViewBounds="true"
+        android:scaleType="fitCenter"
+        android:layout_gravity="bottom"/>
+
+</LinearLayout>

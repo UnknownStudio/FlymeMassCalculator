@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="utf-8"?>
+<!-- Copyright 2013 Meizu Co., Ltd. -->
+
+<resources>
+    <color name="mz_theme_color_dodgerblue">#508aeb</color>
+    <color name="mz_theme_color_dodgerblue_dark">#121c35</color>
+    <color name="mz_theme_color_dodgerblue_pressed">#3d68ba</color>
+    <color name="mz_action_menu_textcolor_disabled">#4D000000</color>
+    <color name="mz_highlighted_text_light_color_dodgerblue">#33517bd1</color>
+
+    <color name="mz_cir_btn_color_disable">#b2b2b2</color>
+    <color name="mz_popup_text_light_disabled">#4d000000</color>
+    <color name="mz_popup_text_light">#ff000000</color>
+    <color name="hint_text_color">#33517bd1</color>
+    <!-- actionbar menu 文本颜色 -->
+    <color name="mz_appcompat_action_menu_textcolor_normal">#ffffff</color>
+    <color name="mz_appcompat_action_menu_textcolor_disabled">#4Dffffff</color>
+</resources>
+

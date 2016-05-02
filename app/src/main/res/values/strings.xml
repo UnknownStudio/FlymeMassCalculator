@@ -1,0 +1,14 @@
+<resources>
+    <string name="app_name">Mass Calculator</string>
+    <string name="please_typein">Please enter a chemical formula</string>
+    <string name="calculate">Calculate</string>
+    <string name="clean">Clean</string>
+    <string name="wrong">Wrong Chemical Formula</string>
+    <string name="help_setting">Help &amp; Setting</string>
+    <string name="simple_weigh">Simple Weigh Mode</string>
+    <string name="confirm">Confirm</string>
+    <string name="more">About</string>
+    <string name="start">Calculator</string>
+    <string name="basic">Basic Mode</string>
+    <string name="higher">Standard Mode</string>
+</resources>
