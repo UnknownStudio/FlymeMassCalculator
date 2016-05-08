@@ -1,37 +1,36 @@
-package com.trychen.flyme.masscalculator;
+package com.trychen.flyme.flymemasscalculator;
 
 import android.content.Context;
-import android.graphics.Rect;
 import android.graphics.drawable.ColorDrawable;
-import android.graphics.drawable.Drawable;
-import android.graphics.drawable.LayerDrawable;
 import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
-import android.view.Window;
 import android.view.WindowManager;
+import android.view.animation.Animation;
 import android.widget.GridView;
 import android.widget.PopupWindow;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
-import com.meizu.flyme.blur.drawable.BlurDrawable;
-import com.meizu.flyme.blur.view.BlurLinearLayout;
-
 public class PerPopupWindows extends PopupWindow{
-    private LayoutInflater inflater;
     private View popView;
     private TextView textMass;
     private TextView textWeigh;
     private View rootView;
     private GridView girdView;
     public View fillView;
+    private boolean massed = false;
+    private String oMass;
+    private String oWeigh;
+    private Context context;
+    private ScrollView scrollView;
 
     public PerPopupWindows(Context context, String name, String weigh, LayoutInflater inflater, View rootView) {
         super(context);
-        this.inflater = inflater;
         this.rootView = rootView;
+        this.context=context;
         setWidth(ViewGroup.LayoutParams.MATCH_PARENT);
         setHeight(ViewGroup.LayoutParams.MATCH_PARENT);
         popView = inflater.inflate(R.layout.percents, null);
@@ -40,12 +39,26 @@ public class PerPopupWindows extends PopupWindow{
         textWeigh = (TextView) popView.findViewById(R.id.pTextWeight);
         girdView = (GridView) popView.findViewById(R.id.pGridView);
         fillView = popView.findViewById(R.id.pFill);
+        scrollView = (ScrollView) popView.findViewById(R.id.scrollView);
+        oMass = name;
+        oWeigh = weigh;
 
         popView.findViewById(R.id.pTextLayout).setOnTouchListener(new View.OnTouchListener() {
             @Override
             public boolean onTouch(View v, MotionEvent event) {
-                closePopupWindow();
+                if (!massed) closePopupWindow();
+                else {
+                    changeMass(oMass,oWeigh,false);
+                    massed = false;
+                }
                 return false;
+            }
+        });
+
+        fillView.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                closePopupWindow();
             }
         });
 
@@ -66,6 +79,31 @@ public class PerPopupWindows extends PopupWindow{
         setBackgroundDrawable(dw);
         setAnimationStyle(R.style.popupWindows);
 
+    }
+
+    public void changeMass(final String text , final String weigh , boolean massed){
+        this.massed = massed;
+        Main.goneAnimation.setAnimationListener(new Animation.AnimationListener() {
+            @Override
+            public void onAnimationStart(Animation animation) {
+
+            }
+
+            @Override
+            public void onAnimationEnd(Animation animation) {
+                textMass.setText(text);
+                textWeigh.setText(weigh);
+                textMass.startAnimation(Main.showAnimation);
+                textWeigh.startAnimation(Main.showAnimation);
+            }
+
+            @Override
+            public void onAnimationRepeat(Animation animation) {
+
+            }
+        });
+        textMass.startAnimation(Main.goneAnimation);
+        textWeigh.startAnimation(Main.goneAnimation);
     }
 
     public void show() {

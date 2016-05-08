@@ -1,4 +1,4 @@
-package com.trychen.flyme.masscalculator;
+package com.trychen.flyme.flymemasscalculator;
 
 import android.annotation.TargetApi;
 import android.app.Activity;
@@ -22,6 +22,8 @@ import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
 import android.view.ViewTreeObserver;
+import android.view.animation.Animation;
+import android.view.animation.AnimationUtils;
 import android.view.inputmethod.EditorInfo;
 import android.view.inputmethod.InputMethodManager;
 import android.widget.Button;
@@ -31,7 +33,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import java.io.ByteArrayOutputStream;
 import java.io.FileInputStream;
 import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
@@ -43,6 +44,7 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Properties;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class Main extends Activity implements PopupWindow.OnDismissListener {
@@ -54,10 +56,13 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
     private TextView textWegiht;
     private LinearLayout rootView;
     private static boolean simpleMode = false;
+    private static boolean fractionMode = false;
     private boolean calculated = false;
     private boolean isSoftKeyBoard = false;
     public static List<Map<String, Object>> masses;
-    private PerPopupWindows popupWindows;
+    public static PerPopupWindows popupWindows;
+
+    public static Animation showAnimation,goneAnimation;
 
     public static MassListViewAdapter massesAdapter;
 
@@ -179,6 +184,10 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
 
         buttonLayout = (LinearLayout) findViewById(R.id.buttonLayout);
 
+
+        goneAnimation = AnimationUtils.loadAnimation(this,R.anim.alpha_gone);
+        showAnimation = AnimationUtils.loadAnimation(this,R.anim.alpha_show);
+
     }
 
     @Override
@@ -201,7 +210,7 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        save(simpleMode);
+        save();
     }
 
     @Override
@@ -213,16 +222,21 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_more) {
-            boolean[] booleans = {simpleMode};
+            boolean[] booleans;
+            if (simpleMode)
+                booleans = new boolean[]{simpleMode, fractionMode}; else
+            booleans = new boolean[]{simpleMode, fractionMode};
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
             builder.setTitle(R.string.help_setting);
-            builder.setMultiChoiceItems(new String[]{getResources().getString(R.string.simple_weigh)}, booleans, new DialogInterface.OnMultiChoiceClickListener() {
+            builder.setMultiChoiceItems(simpleMode?new String[]{getResources().getString(R.string.simple_weigh),getResources().getString(R.string.fraction_mode)}:new String[]{getResources().getString(R.string.simple_weigh)}, booleans, new DialogInterface.OnMultiChoiceClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                     if (which == 0) {
-                        save(isChecked);
                         simpleMode = isChecked;
+                    } else if (which == 1){
+                        fractionMode = isChecked;
                     }
+                    save();
                 }
             });
             builder.setPositiveButton(R.string.confirm, null);
@@ -282,7 +296,12 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
             Map<String, Object> map = new HashMap<>();
             map.put("name", formula.getName(i));
             map.put("num", String.valueOf(formula.nums.get(i)));
-            map.put("percents", formula.getMassPercent(formula.vals.get(i)) + "%");
+            if (fractionMode&&simpleMode){
+                map.put("percents", formula.getMassPercentInFraction(formula.vals.get(i)));
+            } else {
+                map.put("percents", formula.getMassPercent(formula.vals.get(i)) + "%");
+            }
+            map.put("weigh", formula.getValTwoDString(i));
             masses.add(map);
         }
 
@@ -293,26 +312,15 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
         System.gc();
     }
 
-    private void save(boolean b) {
-
-        String content = b ? "true" : "false";
+    private void save() {
         try {
-            /* 根据用户提供的文件名，以及文件的应用模式，打开一个输出流.文件不存系统会为你创建一个的，
-             * 至于为什么这个地方还有FileNotFoundException抛出，我也比较纳闷。在Context中是这样定义的
-             *   public abstract FileOutputStream openFileOutput(String name, int mode)
-             *   throws FileNotFoundException;
-             * openFileOutput(String name, int mode);
-             * 第一个参数，代表文件名称，注意这里的文件名称不能包括任何的/或者/这种分隔符，只能是文件名
-             *          该文件会被保存在/data/data/应用名称/files/chenzheng_java.txt
-             * 第二个参数，代表文件的操作模式
-             *          MODE_PRIVATE 私有（只能创建它的应用访问） 重复写入时会文件覆盖
-             *          MODE_APPEND  私有   重复写入时会在文件的末尾进行追加，而不是覆盖掉原来的文件
-             *          MODE_WORLD_READABLE 公用  可读
-             *          MODE_WORLD_WRITEABLE 公用 可读写
-             *  */
+            Properties prop = new Properties();
+            prop.put("version","1");
+            prop.put("simpleMode", simpleMode?"1":"0");
+            prop.put("fractionMode", fractionMode?"1":"0");
             FileOutputStream outputStream = openFileOutput("config.dat",
                     Activity.MODE_PRIVATE);
-            outputStream.write(content.getBytes());
+            prop.store(outputStream,"");
             outputStream.flush();
             outputStream.close();
         } catch (FileNotFoundException e) {
@@ -320,28 +328,23 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
         } catch (IOException e) {
             e.printStackTrace();
         }
-
     }
 
-    /**
-     * @author chenzheng_java
-     * 读取刚才用户保存的内容
-     */
     private void read() {
         try {
             FileInputStream inputStream = this.openFileInput("config.dat");
-            byte[] bytes = new byte[1024];
-            ByteArrayOutputStream arrayOutputStream = new ByteArrayOutputStream();
-            while (inputStream.read(bytes) != -1) {
-                arrayOutputStream.write(bytes, 0, bytes.length);
-            }
+            Properties properties = new Properties();
+            properties.load(inputStream);
+            simpleMode = properties.get("simpleMode").equals("1")?true:false;
+            fractionMode = properties.get("fractionMode").equals("1")?true:false;
             inputStream.close();
-            arrayOutputStream.close();
-            String content = new String(arrayOutputStream.toByteArray());
-            simpleMode = content.startsWith("true");
         } catch (FileNotFoundException e) {
-            save(isSimpleMode());
+            save();
         } catch (IOException e) {
+            save();
+            e.printStackTrace();
+        } catch (NullPointerException e){
+            save();
             e.printStackTrace();
         }
     }

@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="utf-8"?>
 <manifest xmlns:android="http://schemas.android.com/apk/res/android"
-    package="com.trychen.flyme.masscalculator" >
+    package="com.trychen.flyme.flymemasscalculator" >
 
     <application
-        android:name=".MassApplication"
+        android:name="com.trychen.flyme.flymemasscalculator.MassApplication"
         android:allowBackup="true"
         android:icon="@mipmap/ic_launcher"
         android:label="@string/app_name"
@@ -16,7 +16,7 @@
             android:resource="@xml/launcher_menu" />
 
         <activity
-            android:name="com.trychen.flyme.masscalculator.Main"
+            android:name="com.trychen.flyme.flymemasscalculator.Main"
             android:label="@string/app_name"
             android:launchMode="singleInstance"
             android:windowSoftInputMode="adjustPan"

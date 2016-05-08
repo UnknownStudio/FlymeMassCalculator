@@ -9,7 +9,7 @@
         android:text="He"
         android:textSize="56sp"
         android:gravity="center_horizontal"
-        android:layout_marginTop="7dp"/>
+        android:layout_marginTop="7dp" />
     <TextView
         android:id="@+id/pItemTextCount"
         android:layout_width="match_parent"

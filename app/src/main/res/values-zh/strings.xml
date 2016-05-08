@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <resources>
-    <string name="app_name">相对质量计算器</string>
+    <string name="app_name">相对质量</string>
     <string name="please_typein">请输入化学式</string>
     <string name="calculate">计算</string>
     <string name="clean">清除</string>
@@ -12,4 +12,5 @@
     <string name="start">开始计算</string>
     <string name="basic">简易模式</string>
     <string name="higher">标准模式</string>
+    <string name="fraction_mode">分式模式(只对简易模式)</string>
 </resources>

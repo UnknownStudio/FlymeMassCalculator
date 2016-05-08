@@ -1,4 +1,4 @@
-package com.trychen.flyme.masscalculator;
+package com.trychen.flyme.flymemasscalculator;
 
 import android.util.Log;
 

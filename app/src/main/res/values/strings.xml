@@ -11,4 +11,5 @@
     <string name="start">Calculator</string>
     <string name="basic">Basic Mode</string>
     <string name="higher">Standard Mode</string>
+    <string name="fraction_mode">Fraction Mode</string>
 </resources>
