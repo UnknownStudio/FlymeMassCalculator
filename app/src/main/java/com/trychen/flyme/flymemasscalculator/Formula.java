@@ -35,7 +35,7 @@ public class Formula {
 
     public Formula addNum(int num) {
         nums.add(num);
-        double new_mass = Main.isSimpleMode() ? ((double) num) * simpleweights[lastInd] : ((double) num) * weights[lastInd];
+        double new_mass = Main.application.isSimpleMode() ? ((double) num) * simpleweights[lastInd] : ((double) num) * weights[lastInd];
         mass += new_mass;
         vals.add(new_mass);
         nMasses += 1;

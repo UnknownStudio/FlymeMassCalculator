@@ -33,10 +33,6 @@ import android.widget.LinearLayout;
 import android.widget.PopupWindow;
 import android.widget.TextView;
 
-import java.io.FileInputStream;
-import java.io.FileNotFoundException;
-import java.io.FileOutputStream;
-import java.io.IOException;
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
 import java.text.DecimalFormat;
@@ -44,7 +40,6 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
-import java.util.Properties;
 
 @TargetApi(Build.VERSION_CODES.HONEYCOMB)
 public class Main extends Activity implements PopupWindow.OnDismissListener {
@@ -55,27 +50,39 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
     private LinearLayout buttonLayout;
     private TextView textWegiht;
     private LinearLayout rootView;
-    private static boolean simpleMode = false;
-    private static boolean fractionMode = false;
+
     private boolean calculated = false;
     private boolean isSoftKeyBoard = false;
+
     public static List<Map<String, Object>> masses;
     public static PerPopupWindows popupWindows;
+
+    public static MassApplication application;
 
     public static Animation showAnimation,goneAnimation;
 
     public static MassListViewAdapter massesAdapter;
 
+    private boolean[] option = new boolean[]{false, false};
+
     FormulaParse parse;
     Formula formula;
+
+    @Override
+    protected void onRestart() {
+        super.onRestart();
+    }
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         this.setContentView(R.layout.main);
+        
+        //加载Application
+        application = (MassApplication) getApplicationContext();
 
         //读取配置数据
-        read();
+        application.read();
 
         //初始化界面
         initView();
@@ -86,10 +93,10 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
         Uri data = getIntent().getData();
         if (data != null && TextUtils.equals("forcetouch", data.getScheme())) {
             if (TextUtils.equals("/basic", data.getPath())) {
-                simpleMode = true;
+                application.setSimpleMode(true);
                 forceOpenSoftKeyBoard();
             } else if (TextUtils.equals("/higher", data.getPath())) {
-                simpleMode = false;
+                application.setSimpleMode(false);
                 forceOpenSoftKeyBoard();
             }
         }
@@ -210,7 +217,7 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        save();
+        application.save();
     }
 
     @Override
@@ -222,21 +229,17 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
     @Override
     public boolean onOptionsItemSelected(MenuItem item) {
         if (item.getItemId() == R.id.action_more) {
-            boolean[] booleans;
-            if (simpleMode)
-                booleans = new boolean[]{simpleMode, fractionMode}; else
-            booleans = new boolean[]{simpleMode, fractionMode};
             final AlertDialog.Builder builder = new AlertDialog.Builder(this, AlertDialog.THEME_DEVICE_DEFAULT_LIGHT);
             builder.setTitle(R.string.help_setting);
-            builder.setMultiChoiceItems(simpleMode?new String[]{getResources().getString(R.string.simple_weigh),getResources().getString(R.string.fraction_mode)}:new String[]{getResources().getString(R.string.simple_weigh)}, booleans, new DialogInterface.OnMultiChoiceClickListener() {
+            builder.setMultiChoiceItems(application.isSimpleMode()?new String[]{getResources().getString(R.string.simple_weigh),getResources().getString(R.string.fraction_mode)}:new String[]{getResources().getString(R.string.simple_weigh)}, option, new DialogInterface.OnMultiChoiceClickListener() {
                 @Override
                 public void onClick(DialogInterface dialog, int which, boolean isChecked) {
                     if (which == 0) {
-                        simpleMode = isChecked;
+                        application.setSimpleMode(isChecked);
                     } else if (which == 1){
-                        fractionMode = isChecked;
+                        application.setFractionMode(isChecked);
                     }
-                    save();
+                    application.save();
                 }
             });
             builder.setPositiveButton(R.string.confirm, null);
@@ -296,7 +299,7 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
             Map<String, Object> map = new HashMap<>();
             map.put("name", formula.getName(i));
             map.put("num", String.valueOf(formula.nums.get(i)));
-            if (fractionMode&&simpleMode){
+            if (application.isFractionMode()&&application.isSimpleMode()){
                 map.put("percents", formula.getMassPercentInFraction(formula.vals.get(i)));
             } else {
                 map.put("percents", formula.getMassPercent(formula.vals.get(i)) + "%");
@@ -310,47 +313,6 @@ public class Main extends Activity implements PopupWindow.OnDismissListener {
 
         calculated = true;
         System.gc();
-    }
-
-    private void save() {
-        try {
-            Properties prop = new Properties();
-            prop.put("version","1");
-            prop.put("simpleMode", simpleMode?"1":"0");
-            prop.put("fractionMode", fractionMode?"1":"0");
-            FileOutputStream outputStream = openFileOutput("config.dat",
-                    Activity.MODE_PRIVATE);
-            prop.store(outputStream,"");
-            outputStream.flush();
-            outputStream.close();
-        } catch (FileNotFoundException e) {
-            e.printStackTrace();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
-    }
-
-    private void read() {
-        try {
-            FileInputStream inputStream = this.openFileInput("config.dat");
-            Properties properties = new Properties();
-            properties.load(inputStream);
-            simpleMode = properties.get("simpleMode").equals("1")?true:false;
-            fractionMode = properties.get("fractionMode").equals("1")?true:false;
-            inputStream.close();
-        } catch (FileNotFoundException e) {
-            save();
-        } catch (IOException e) {
-            save();
-            e.printStackTrace();
-        } catch (NullPointerException e){
-            save();
-            e.printStackTrace();
-        }
-    }
-
-    public static boolean isSimpleMode() {
-        return simpleMode;
     }
 
     public void forceOpenSoftKeyBoard() {
